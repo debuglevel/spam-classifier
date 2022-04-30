@@ -16,14 +16,26 @@ class TokenizerServiceTests {
 
     @ParameterizedTest
     @MethodSource("textProvider")
-    fun `tokenize text`(tokenTestData: TestDataProvider.TokenTestData) {
+    fun `tokenize text to distinct tokens`(textTestData: TestDataProvider.TextTestData) {
         // Arrange
 
         // Act
-        val tokens = tokenizerService.tokenize(tokenTestData.text)
+        val tokens = tokenizerService.tokenize(textTestData.text, true)
 
         // Assert
-        assertThat(tokens).containsExactlyElementsOf(tokenTestData.tokens)
+        assertThat(tokens).containsExactlyElementsOf(textTestData.tokens.distinct())
+    }
+
+    @ParameterizedTest
+    @MethodSource("textProvider")
+    fun `tokenize text retaining duplicates`(textTestData: TestDataProvider.TextTestData) {
+        // Arrange
+
+        // Act
+        val tokens = tokenizerService.tokenize(textTestData.text, false)
+
+        // Assert
+        assertThat(tokens).containsExactlyElementsOf(textTestData.tokens)
     }
 
     fun textProvider() = TestDataProvider.textProvider()
