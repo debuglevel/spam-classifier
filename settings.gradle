@@ -30,4 +30,4 @@ gradleEnterprise {
     }
 }
 
-rootProject.name = 'greeter-microservice'
+rootProject.name = 'spam-classifier'

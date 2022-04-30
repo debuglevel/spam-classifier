@@ -50,7 +50,7 @@ deploy:
     api_key:
       # Output of: travis encrypt $(heroku auth:token)
       secure: x3qV9/MWQlG/AV+kAITJe2J16QQ+km6eLKyN/3MwtMZ0+55zseWvq1QLexnLQm9Mt9fSKofAR64TNAvvAUspCx42uQDa/zuYQIJV5oBCeN+BYSd42MdsPxsuOge3DiLlArpZIl+nEiy9wl5msxb3G524J01wo0QO/UdsD91WfndeSPW/v68NFK+yVDAG1/HAslmDUC9Nkjo3JBuoiOsGgKnqzbn53rPQDMGQCqp306TlfW14knzpQQBYGH56EflghvAtCs4oYDA5UnMmWK1r6vN47UXIY0etl+kbMxwY8esDuYMMOpiNP+s50740CAcXgzFH9GuFY7lQAGp8TYxbEeKXfphQpYu3v0VkZCP5Xh6BIw1dF9bgQW7yX/eCIfiYvR22C+HT5StonDJrMTtpxiD0WLmkFAodtWarhLPRMuQkoz6U6g/zanLWmrTlp3zhFt13ymNGf3Upj3AtDwlaC0E9XsZWlGlGTM+0WbO0JdYqghWdcT/Rca9K/RbRkBB1Jnfhcz5frNUV1ykyPXjg/kmWvWlL4jCDSQlhQbksd8CVzIi2zMYHSqcQcOhTOWwib4wjxPHqb87u7M4UfG96Tr8DPtK2qFvYDU4JYc5qSPQ1bs2MUjMmvBPOSBvvXq5IFGB51z4dEZxEH2nNAY2QG43n/7YthFFzIxUqtBdi6HU=
-    app: greeter-microservice
+    app: spam-classifier
     # build on heroku can be initialized by its Build API (default) or by a git push
     #strategy: git
     skip_cleanup: true

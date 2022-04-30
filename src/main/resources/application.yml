@@ -1,12 +1,5 @@
 app:
-  greetings:
-    default-language: "null" # note that "null" must be enclosed by quotation marks, as it would be unset otherwise
-    unknown-language: "unknown" # note that key should not be camelCase, as uppercase characters may lead to problems in configuration binding
-    persons:
-      some-duration: 42m
-      some-text: "foo"
-      some-integer: 12
-      some-double: 12.3
+  spamclassifier:
 
   security:
     configurable-credential-authentication:
@@ -15,7 +8,7 @@ app:
 
 micronaut:
   application:
-    name: greeter
+    name: spam-classifier
     instance:
       id: ${random.shortuuid} # instance ID should be set random if Consul registration is active to avoid collisions (default ID would be the port number)
   server:
@@ -131,10 +124,10 @@ jpa:
           # validate    Hibernate only validates whether the tables and columns exist, otherwise it throws an exception.
           # none        This value effectively turns off the DDL generation.
           # Set to "none" because Liquibase creates the database structure on first startup.
-          auto: none
+          auto: update
 
 liquibase:
-  enabled: true
+  enabled: false
   datasources:
     default:
       change-log: 'liquibase-changelogs/root.xml'
