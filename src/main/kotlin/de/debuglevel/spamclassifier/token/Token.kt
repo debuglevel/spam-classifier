@@ -1,6 +1,7 @@
 package de.debuglevel.spamclassifier.token
 
 import org.hibernate.annotations.GenericGenerator
+import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -17,5 +18,8 @@ data class Token(
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)")
     var id: UUID?,
-    var name: String
+    var text: String,
+    var spamCount: Int,
+    var hamCount: Int,
+    var lastSeenOn: LocalDateTime,
 )

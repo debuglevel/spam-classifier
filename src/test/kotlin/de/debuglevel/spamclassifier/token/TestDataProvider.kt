@@ -1,5 +1,6 @@
 package de.debuglevel.spamclassifier.token
 
+import java.time.LocalDateTime
 import java.util.stream.Stream
 
 object TestDataProvider {
@@ -28,6 +29,50 @@ object TestDataProvider {
         TextTestData(
             text = "Hello?!?!? Anybody here?!!",
             tokens = listOf("hello", "anybody", "here")
+        ),
+    )
+
+    data class TokenTestData(
+        val text: String,
+        val spamClass: SpamClass,
+        val seenOn: LocalDateTime,
+    )
+
+    fun tokenProvider() = Stream.of(
+        TokenTestData(
+            text = "Harry",
+            spamClass = SpamClass.Ham,
+            seenOn = LocalDateTime.now(),
+        ),
+        TokenTestData(
+            text = "Ron",
+            spamClass = SpamClass.Ham,
+            seenOn = LocalDateTime.now(),
+        ),
+        TokenTestData(
+            text = "Albus",
+            spamClass = SpamClass.Ham,
+            seenOn = LocalDateTime.now(),
+        ),
+        TokenTestData(
+            text = "Severus",
+            spamClass = SpamClass.Ham,
+            seenOn = LocalDateTime.now(),
+        ),
+        TokenTestData(
+            text = "Severus",
+            spamClass = SpamClass.Spam,
+            seenOn = LocalDateTime.now(),
+        ),
+        TokenTestData(
+            text = "Voldemort",
+            spamClass = SpamClass.Spam,
+            seenOn = LocalDateTime.now(),
+        ),
+        TokenTestData(
+            text = "Lucius",
+            spamClass = SpamClass.Spam,
+            seenOn = LocalDateTime.now(),
         ),
     )
 }

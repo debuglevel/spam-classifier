@@ -6,5 +6,6 @@ import java.util.*
 
 @Repository
 interface TokenRepository : CrudRepository<Token, UUID> {
-    fun find(name: String): Token
+    fun find(text: String): Optional<Token>
+    fun existsByText(text: String): Boolean
 }
