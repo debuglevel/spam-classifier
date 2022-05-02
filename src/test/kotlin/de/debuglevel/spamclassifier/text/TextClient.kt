@@ -8,5 +8,8 @@ import io.micronaut.http.client.annotation.Client
 @Client("/texts")
 interface TextClient {
     @Post("/classified/")
-    fun addClassified(@Body addTextRequest: AddTextRequest): HttpResponse<Unit>
+    fun addClassified(@Body addClassifiedTextRequest: AddClassifiedTextRequest): HttpResponse<Unit>
+
+    @Post("/unclassified/")
+    fun addUnclassified(@Body addUnclassifiedTextRequest: AddUnclassifiedTextRequest): HttpResponse<AddUnclassifiedTextResponse>
 }

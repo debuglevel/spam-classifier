@@ -18,14 +18,14 @@ class TextControllerTests {
     @Test
     fun `add spam text`() {
         // Arrange
-        val addTextRequest = AddTextRequest(
+        val addClassifiedTextRequest = AddClassifiedTextRequest(
             text = "Hello, my name is Harry.",
             classification = SpamClass.Ham,
             seenOn = LocalDateTime.now().minusHours(11)
         )
 
         // Act
-        val httpResponse = textClient.addClassified(addTextRequest)
+        val httpResponse = textClient.addClassified(addClassifiedTextRequest)
 
         // Assert
         assertThat(httpResponse.status()).isEqualTo(HttpStatus.CREATED)
@@ -35,17 +35,34 @@ class TextControllerTests {
     @Test
     fun `add ham text`() {
         // Arrange
-        val addTextRequest = AddTextRequest(
+        val addClassifiedTextRequest = AddClassifiedTextRequest(
             text = "Buy Bitcoin now.",
             classification = SpamClass.Spam,
             seenOn = LocalDateTime.now().minusHours(11)
         )
 
         // Act
-        val httpResponse = textClient.addClassified(addTextRequest)
+        val httpResponse = textClient.addClassified(addClassifiedTextRequest)
 
         // Assert
         assertThat(httpResponse.status()).isEqualTo(HttpStatus.CREATED)
+        // TODO: ensure call on textService.learn and/or tokenService.increase
+    }
+
+    @Test
+    fun `classify text`() {
+        // Arrange
+        val addUnclassifiedTextRequest = AddUnclassifiedTextRequest(
+            text = "Buy Bitcoin now.",
+            seenOn = LocalDateTime.now().minusHours(11)
+        )
+
+        // Act
+        val httpResponse = textClient.addUnclassified(addUnclassifiedTextRequest)
+
+        // Assert
+        assertThat(httpResponse.status()).isEqualTo(HttpStatus.CREATED)
+        assertThat(httpResponse.body().scores).isNotEmpty
         // TODO: ensure call on textService.learn and/or tokenService.increase
     }
 }
