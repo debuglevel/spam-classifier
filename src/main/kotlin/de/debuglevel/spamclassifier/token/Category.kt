@@ -1,6 +1,6 @@
 package de.debuglevel.spamclassifier.token
 
-enum class SpamClass {
+enum class Category {
     Spam,
     Ham,
 }

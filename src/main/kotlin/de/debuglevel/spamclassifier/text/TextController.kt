@@ -1,5 +1,6 @@
 package de.debuglevel.spamclassifier.text
 
+import de.debuglevel.spamclassifier.classifier.ClassifierService
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.annotation.Controller
@@ -13,7 +14,10 @@ import java.time.LocalDateTime
 @Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/texts")
 @Tag(name = "texts")
-class TextController(private val textService: TextService) {
+class TextController(
+    private val textService: TextService,
+    private val classifierService: ClassifierService,
+) {
     private val logger = KotlinLogging.logger {}
 
     /**
@@ -25,7 +29,8 @@ class TextController(private val textService: TextService) {
 
         return try {
             val seenOn = addClassifiedTextRequest.seenOn ?: LocalDateTime.now()
-            textService.learn(addClassifiedTextRequest.text, addClassifiedTextRequest.classification, seenOn)
+//            textService.learn(addClassifiedTextRequest.text, addClassifiedTextRequest.classification, seenOn)
+            classifierService.learn(addClassifiedTextRequest.text, addClassifiedTextRequest.classification, seenOn)
 
             HttpStatus.CREATED
         } catch (e: Exception) {
@@ -43,9 +48,13 @@ class TextController(private val textService: TextService) {
 
         return try {
             val seenOn = addUnclassifiedTextRequest.seenOn ?: LocalDateTime.now()
-            //textService.learn(addUnclassifiedTextRequest.text, addUnclassifiedTextRequest.classification, seenOn)
 
-            val scores = mapOf("dummy" to 0.5)
+            val classifications = classifierService.classify(addUnclassifiedTextRequest.text)
+
+            val scores = classifications.map {
+                it.key to mapOf(it.value.category to it.value.probability)
+            }.toMap()
+
             val addUnclassifiedTextResponse = AddUnclassifiedTextResponse(scores)
 
             HttpResponse.created(addUnclassifiedTextResponse)

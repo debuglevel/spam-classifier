@@ -1,6 +1,6 @@
 package de.debuglevel.spamclassifier.text
 
-import de.debuglevel.spamclassifier.token.SpamClass
+import de.debuglevel.spamclassifier.token.Category
 import io.micronaut.http.HttpStatus
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import jakarta.inject.Inject
@@ -20,7 +20,7 @@ class TextControllerTests {
         // Arrange
         val addClassifiedTextRequest = AddClassifiedTextRequest(
             text = "Hello, my name is Harry.",
-            classification = SpamClass.Ham,
+            classification = Category.Ham,
             seenOn = LocalDateTime.now().minusHours(11)
         )
 
@@ -37,7 +37,7 @@ class TextControllerTests {
         // Arrange
         val addClassifiedTextRequest = AddClassifiedTextRequest(
             text = "Buy Bitcoin now.",
-            classification = SpamClass.Spam,
+            classification = Category.Spam,
             seenOn = LocalDateTime.now().minusHours(11)
         )
 

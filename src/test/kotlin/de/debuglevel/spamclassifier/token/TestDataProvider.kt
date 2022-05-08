@@ -34,44 +34,44 @@ object TestDataProvider {
 
     data class TokenTestData(
         val text: String,
-        val spamClass: SpamClass,
+        val category: Category,
         val seenOn: LocalDateTime,
     )
 
     fun tokenProvider() = Stream.of(
         TokenTestData(
             text = "Harry",
-            spamClass = SpamClass.Ham,
+            category = Category.Ham,
             seenOn = LocalDateTime.now(),
         ),
         TokenTestData(
             text = "Ron",
-            spamClass = SpamClass.Ham,
+            category = Category.Ham,
             seenOn = LocalDateTime.now(),
         ),
         TokenTestData(
             text = "Albus",
-            spamClass = SpamClass.Ham,
+            category = Category.Ham,
             seenOn = LocalDateTime.now(),
         ),
         TokenTestData(
             text = "Severus",
-            spamClass = SpamClass.Ham,
+            category = Category.Ham,
             seenOn = LocalDateTime.now(),
         ),
         TokenTestData(
             text = "Severus",
-            spamClass = SpamClass.Spam,
+            category = Category.Spam,
             seenOn = LocalDateTime.now(),
         ),
         TokenTestData(
             text = "Voldemort",
-            spamClass = SpamClass.Spam,
+            category = Category.Spam,
             seenOn = LocalDateTime.now(),
         ),
         TokenTestData(
             text = "Lucius",
-            spamClass = SpamClass.Spam,
+            category = Category.Spam,
             seenOn = LocalDateTime.now(),
         ),
     )

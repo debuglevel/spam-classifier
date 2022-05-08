@@ -64,14 +64,14 @@ class TokenService(
         return token
     }
 
-//    fun getAll(): Set<Token> {
-//        logger.debug { "Getting all tokens..." }
-//
-//        val tokens = tokenRepository.findAll().toSet()
-//
-//        logger.debug { "Got ${tokens.size} tokens" }
-//        return tokens
-//    }
+    fun getAll(): Set<Token> {
+        logger.debug { "Getting all tokens..." }
+
+        val tokens = tokenRepository.findAll().toSet()
+
+        logger.debug { "Got ${tokens.size} tokens" }
+        return tokens
+    }
 
     private fun add(token: Token): Token {
         logger.debug { "Adding token '$token'..." }
@@ -84,22 +84,22 @@ class TokenService(
 
     fun increase(
         text: String,
-        spamClass: SpamClass,
+        category: Category,
         seenOn: LocalDateTime = LocalDateTime.now(),
         count: Int = 1
     ): Token {
-        logger.debug { "Increasing token '$text' as $spamClass..." }
+        logger.debug { "Increasing token '$text' as $category..." }
 
         val tokenExists = exists(text)
         val savedToken = if (tokenExists) {
             val gotToken = get(text)
             val updateToken = gotToken.copy(
-                spamCount = when (spamClass) {
-                    SpamClass.Spam -> gotToken.spamCount + count
+                spamCount = when (category) {
+                    Category.Spam -> gotToken.spamCount + count
                     else -> gotToken.spamCount
                 },
-                hamCount = when (spamClass) {
-                    SpamClass.Ham -> gotToken.hamCount + count
+                hamCount = when (category) {
+                    Category.Ham -> gotToken.hamCount + count
                     else -> gotToken.hamCount
                 },
                 lastSeenOn = setOf(gotToken.lastSeenOn, seenOn).maxOf { it }
@@ -109,12 +109,12 @@ class TokenService(
             val token = Token(
                 id = null,
                 text = text,
-                spamCount = when (spamClass) {
-                    SpamClass.Spam -> count
+                spamCount = when (category) {
+                    Category.Spam -> count
                     else -> 0
                 },
-                hamCount = when (spamClass) {
-                    SpamClass.Ham -> count
+                hamCount = when (category) {
+                    Category.Ham -> count
                     else -> 0
                 },
                 lastSeenOn = seenOn,
@@ -122,7 +122,7 @@ class TokenService(
             add(token)
         }
 
-        logger.debug { "Increased token: $savedToken as $spamClass" }
+        logger.debug { "Increased token: $savedToken as $category" }
         return savedToken
     }
 

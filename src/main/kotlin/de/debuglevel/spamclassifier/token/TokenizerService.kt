@@ -8,13 +8,13 @@ class TokenizerService {
     private val logger = KotlinLogging.logger {}
 
     fun tokenize(text: String, removeDuplicates: Boolean = true): List<String> {
-        logger.debug { "Tokenizing..." }
+        logger.trace { "Tokenizing ${text.length}-characters text..." }
 
         val tokens = run {
             val tokens = text.replace(Regex("\\W"), " ")
                 .lowercase()
                 .split(" ")
-                .filterNot { it.isNullOrBlank() }
+                .filterNot { it.isBlank() }
 
             when {
                 removeDuplicates -> tokens.distinct()
@@ -22,7 +22,7 @@ class TokenizerService {
             }
         }
 
-        logger.debug { "Tokenized" }
+        logger.trace { "Tokenized ${text.length}-characters text into ${tokens.size} tokens." }
         return tokens
     }
 }

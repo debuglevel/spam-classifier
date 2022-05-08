@@ -1,6 +1,6 @@
 package de.debuglevel.spamclassifier.text
 
-import de.debuglevel.spamclassifier.token.SpamClass
+import de.debuglevel.spamclassifier.token.Category
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest
 import jakarta.inject.Inject
 import org.junit.jupiter.api.Test
@@ -19,7 +19,7 @@ class TextServiceTests {
         val text = "Hello, this is a test."
 
         // Act
-        textService.learn(text, SpamClass.Spam)
+        textService.learn(text, Category.Spam)
 
         // Assert
         // TODO: ensure 5 calls on tokenService.increase with equivalent spam class

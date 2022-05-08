@@ -25,7 +25,7 @@ class TokenServiceTests {
         val token = StringUtils.createRandomString(10)
 
         // Act
-        val increasedToken = tokenService.increase(token, SpamClass.Spam, LocalDateTime.now())
+        val increasedToken = tokenService.increase(token, Category.Spam, LocalDateTime.now())
         val gotToken = tokenService.get(token)
 
         // Assert
@@ -41,12 +41,12 @@ class TokenServiceTests {
     fun `increasing token increases only spam count`() {
         // Arrange
         val token = StringUtils.createRandomString(10)
-        tokenService.increase(token, SpamClass.Spam, LocalDateTime.now())
+        tokenService.increase(token, Category.Spam, LocalDateTime.now())
         val spamCountBefore = tokenService.get(token).spamCount
         val hamCountBefore = tokenService.get(token).hamCount
 
         // Act
-        val increasedToken = tokenService.increase(token, SpamClass.Spam, LocalDateTime.now())
+        val increasedToken = tokenService.increase(token, Category.Spam, LocalDateTime.now())
         val gotToken = tokenService.get(token)
 
         // Assert
@@ -60,12 +60,12 @@ class TokenServiceTests {
     fun `increasing token increases only ham count`() {
         // Arrange
         val token = StringUtils.createRandomString(10)
-        tokenService.increase(token, SpamClass.Ham, LocalDateTime.now())
+        tokenService.increase(token, Category.Ham, LocalDateTime.now())
         val spamCountBefore = tokenService.get(token).spamCount
         val hamCountBefore = tokenService.get(token).hamCount
 
         // Act
-        val increasedToken = tokenService.increase(token, SpamClass.Ham, LocalDateTime.now())
+        val increasedToken = tokenService.increase(token, Category.Ham, LocalDateTime.now())
         val gotToken = tokenService.get(token)
 
         // Assert
@@ -79,10 +79,10 @@ class TokenServiceTests {
     fun `increasing token with newer seenOn updates lastSeenOn`() {
         // Arrange
         val token = StringUtils.createRandomString(10)
-        tokenService.increase(token, SpamClass.Ham, LocalDateTime.now().minusHours(22))
+        tokenService.increase(token, Category.Ham, LocalDateTime.now().minusHours(22))
 
         // Act
-        val increasedToken = tokenService.increase(token, SpamClass.Ham, LocalDateTime.now().minusHours(11))
+        val increasedToken = tokenService.increase(token, Category.Ham, LocalDateTime.now().minusHours(11))
         val gotToken = tokenService.get(token)
 
         // Assert
@@ -97,10 +97,10 @@ class TokenServiceTests {
     fun `increasing token with older seenOn does not update lastSeenOn`() {
         // Arrange
         val token = StringUtils.createRandomString(10)
-        tokenService.increase(token, SpamClass.Ham, LocalDateTime.now().minusHours(11))
+        tokenService.increase(token, Category.Ham, LocalDateTime.now().minusHours(11))
 
         // Act
-        val increasedToken = tokenService.increase(token, SpamClass.Ham, LocalDateTime.now().minusHours(22))
+        val increasedToken = tokenService.increase(token, Category.Ham, LocalDateTime.now().minusHours(22))
         val gotToken = tokenService.get(token)
 
         // Assert
@@ -128,13 +128,13 @@ class TokenServiceTests {
         } catch (_: Exception) {
         }
 
-        when (token.spamClass) {
-            SpamClass.Spam -> expectedSpamCount++
-            SpamClass.Ham -> expectedHamCount++
+        when (token.category) {
+            Category.Spam -> expectedSpamCount++
+            Category.Ham -> expectedHamCount++
         }
 
         // Act
-        val increasedToken = tokenService.increase(token.text, token.spamClass, token.seenOn)
+        val increasedToken = tokenService.increase(token.text, token.category, token.seenOn)
 
         // Assert
         assertThat(increasedToken.text).isEqualTo(token.text)
@@ -162,7 +162,7 @@ class TokenServiceTests {
         // Arrange
 
         // Act
-        val increasedToken = tokenService.increase(token.text, token.spamClass, token.seenOn)
+        val increasedToken = tokenService.increase(token.text, token.category, token.seenOn)
         val tokenExists = tokenService.exists(increasedToken.text)
 
         // Assert
@@ -181,7 +181,7 @@ class TokenServiceTests {
             if (!tokenService.exists(token.text)) {
                 expectedTokenCount++
             }
-            tokenService.increase(token.text, token.spamClass, token.seenOn)
+            tokenService.increase(token.text, token.category, token.seenOn)
 
             // Act
             val tokenCount = tokenService.count
@@ -247,7 +247,7 @@ class TokenServiceTests {
 
         // Arrange
         for (token in tokens) {
-            tokenService.increase(token.text, token.spamClass, token.seenOn)
+            tokenService.increase(token.text, token.category, token.seenOn)
         }
 
         // Act

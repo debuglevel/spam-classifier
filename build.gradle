@@ -65,13 +65,13 @@ mainClassName = _mainClass
 repositories {
     mavenCentral()
 //    mavenLocal()
-//    maven {
-//        url "https://jitpack.io"
-////        // Workaround to be able to specify a git hash as jitpack version
-////        metadataSources {
-////            artifact()
-////        }
-//    }
+    maven {
+        url "https://jitpack.io"
+//        // Workaround to be able to specify a git hash as jitpack version
+//        metadataSources {
+//            artifact()
+//        }
+    }
 }
 
 dependencies {
@@ -182,6 +182,10 @@ dependencies {
 
     // Debuglevel Microservice Commons
     //implementation "com.github.debuglevel:microservice-commons:f24dd3964f"
+
+    // Spam Classification
+    implementation "com.github.ptnplanet:Java-Naive-Bayes-Classifier:$bayesClassifierVersion"
+    implementation "org.apache.opennlp:opennlp-tools:$openNlpVersion"
 }
 
 // Java configuration
