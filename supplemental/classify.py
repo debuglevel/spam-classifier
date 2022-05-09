@@ -4,6 +4,10 @@ from black import Iterator
 import requests
 from pprint import pprint
 from library import SmsCollection, TwitterCollection
+import httpx
+
+# httpClient = requests.Session()
+httpClient = httpx.Client()
 
 
 def ensure_dict(d, classifier):
@@ -89,7 +93,7 @@ def classify(text: str):
         "text": text,
     }
 
-    response = requests.post("http://localhost:8080/texts/unclassified/", json=data)
+    response = httpClient.post("http://localhost:8080/texts/unclassified/", json=data)
 
     return response.json()
 

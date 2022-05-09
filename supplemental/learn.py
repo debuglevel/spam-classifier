@@ -1,19 +1,16 @@
 #! /usr/bin/env python
+from typing import Iterator
 import requests
 from library import SmsCollection
 from library import TwitterCollection
+import httpx
+
+# httpClient = requests.Session()
+httpClient = httpx.Client()
 
 
-def process_sms_collection():
-    smsCollection = SmsCollection()
-    for sample in smsCollection:
-        # print(sample)
-        learn(sample["text"], sample["category"])
-
-
-def process_twitter_collection():
-    twitterCollection = TwitterCollection()
-    for sample in twitterCollection:
+def process_collection(collection: Iterator):
+    for sample in collection:
         # print(sample)
         learn(sample["text"], sample["category"])
 
@@ -24,7 +21,7 @@ def learn(text: str, category: str):
         "classification": category,
     }
 
-    response = requests.post("http://localhost:8080/texts/classified/", json=data)
+    response = httpClient.post("http://localhost:8080/texts/classified/", json=data)
 
     if response.status_code == 201:
         print(".", end="", flush=True)
@@ -33,8 +30,8 @@ def learn(text: str, category: str):
 
 
 def main():
-    # process_sms_collection()
-    process_twitter_collection()
+    process_collection(SmsCollection())
+    process_collection(TwitterCollection())
 
 
 if __name__ == "__main__":
