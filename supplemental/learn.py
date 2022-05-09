@@ -1,11 +1,19 @@
 #! /usr/bin/env python
 import requests
 from library import SmsCollection
+from library import TwitterCollection
 
 
 def process_sms_collection():
     smsCollection = SmsCollection()
     for sample in smsCollection:
+        # print(sample)
+        learn(sample["text"], sample["category"])
+
+
+def process_twitter_collection():
+    twitterCollection = TwitterCollection()
+    for sample in twitterCollection:
         # print(sample)
         learn(sample["text"], sample["category"])
 
@@ -25,7 +33,8 @@ def learn(text: str, category: str):
 
 
 def main():
-    process_sms_collection()
+    # process_sms_collection()
+    process_twitter_collection()
 
 
 if __name__ == "__main__":
