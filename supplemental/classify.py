@@ -75,6 +75,10 @@ def print_confusion_matrix(
     actual_positives = TP + FN
     actual_negatives = FP + TN
     all = predicted_negative + predicted_positive
+    accuracy = (TP + TN) / all
+    sensitivity = TP / (TP + FN)
+    specificity = TN / (TN + FP)
+    precision = TP / (TP + FP)
 
     print(f"==== {classifier:^39} ====")
     print(f"                 ║      predicted      ║         ")
@@ -85,6 +89,9 @@ def print_confusion_matrix(
     print(f"═════════════════╬══════════╪══════════╬═════════")
     print(
         f"        {'all':^8} ║ {predicted_positive:>8} │ {predicted_negative:>8} ║ {all:>8}"
+    )
+    print(
+        f"accuracy: {accuracy:.2f}  sensitivity: {sensitivity:.2f}  specificity: {specificity:.2f}  precision: {precision:.2f}"
     )
 
 
@@ -100,7 +107,7 @@ def classify(text: str):
 
 def main():
     process_collection(SmsCollection())
-    # process_collection(TwitterCollection())
+    process_collection(TwitterCollection())
 
 
 if __name__ == "__main__":
