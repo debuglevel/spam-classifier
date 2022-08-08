@@ -13,8 +13,6 @@ import java.time.LocalDateTime
 class TextService(
     private val tokenService: TokenService,
     private val tokenizerService: TokenizerService,
-    private val naiveBayesClassifier: NaiveBayesClassifier,
-    private val openNLPClassifier: OpenNLPClassifier,
 ) {
     private val logger = KotlinLogging.logger {}
 

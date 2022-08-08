@@ -17,13 +17,10 @@ import kotlin.concurrent.thread
 /**
  * Classifier based on Apache OpenNLP.
  */
-@Singleton
-class OpenNLPClassifier(
+abstract class OpenNLPClassifier(
     private val tokenizerService: TokenizerService,
 ) : BatchLearningClassifier {
     private val logger = KotlinLogging.logger {}
-
-    override val name = "OpenNLP-DocumentCategorizer"
 
     override val supportsReset = false
 
@@ -218,7 +215,7 @@ class OpenNLPClassifier(
         val sampleStream: ObjectStream<DocumentSample> = DocumentSampleStream(lineStream)
 
         // Trains the model
-        val trainingParameters = TrainingParameters.defaultParams()
+        val trainingParameters = getTrainingParameters()
         val model = DocumentCategorizerME.train(
             "en",
             sampleStream,
@@ -229,6 +226,8 @@ class OpenNLPClassifier(
         logger.debug { "Trained model: $model" }
         return model
     }
+
+    abstract fun getTrainingParameters(): TrainingParameters
 
     override fun learn(text: String, category: Category) {
         logger.trace { "Learning ${text.length}-characters text as $category..." }

@@ -12,8 +12,6 @@ import java.time.LocalDateTime
 @Singleton
 class ClassifierService(
     private val tokenizerService: TokenizerService,
-    private val naiveBayesClassifier: NaiveBayesClassifier,
-    private val openNLPClassifier: OpenNLPClassifier,
     private val applicationContext: ApplicationContext,
 ) {
     private val logger = KotlinLogging.logger {}
